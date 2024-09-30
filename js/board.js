@@ -57,17 +57,28 @@ Board.prototype.clearSelection = function(){
     });
 };
 
+Board.prototype.deselect = function(){
+    this.selectedPiece = false;
+}
+
 Board.prototype.boardClicked = function(event){    
     this.clearSelection();    
     const clickedCell = this.getClickedBlock(event);
     const selectedPiece = this.getPieceAt(clickedCell)
     if(selectedPiece){
         //Add 'selected' class to the clicked piece    
-        this.selectPiece(event.target, selectedPiece);
+        
+        if(this.selectedPiece && this.selectedPiece.color != selectedPiece.color){
+            this.selectedPiece.moveTo(clickedCell, this);
+            this.deselect();
+        } else{
+            this.selectPiece(event.target, selectedPiece);
+        }
     }else{
         //update position of the selected piece to new position
         if(this.selectedPiece){
-            this.selectedPiece.moveTo(clickedCell, this); // Pass the board instance        
+            this.selectedPiece.moveTo(clickedCell, this); // Pass the board instance  
+            this.deselect();      
         }                
     }    
 }
