@@ -1,14 +1,19 @@
 var Rook = function(config){
     this.type = 'rook';
+    // this.board = config.board;
     this.constructor(config);
 };
 
 Rook.prototype = new Piece({});
 Rook.prototype.moveTo = function(targetPosition, board) {
     const targetSquare = targetPosition.col + targetPosition.row;
-        
     // Check if the move is valid and the path is clear
     if (this.isValidMove(targetSquare) && this.isPathClear(targetSquare, board)) {
+        const targetPiece = board.getPieceAt(targetPosition);
+        if(targetPiece && targetPiece.color !== this.color){
+            targetPiece.kill(targetPiece, board);
+            // return;
+        }        
         this.position = targetSquare;
         this.render();
     } else {

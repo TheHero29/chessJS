@@ -24,8 +24,13 @@ Bishop.prototype.isValidPosition = function(targetPosition) {
     return false;
 }
 
-Bishop.prototype.moveTo = function(targetPosition) {
+Bishop.prototype.moveTo = function(targetPosition, board) {
     if (this.isValidPosition(targetPosition)) {
+        const targetPiece = board.getPieceAt(targetPosition);
+        if(targetPiece && targetPiece.color !== this.color){
+            targetPiece.kill(targetPiece, board);
+            // return;
+        } 
         // Update the bishop's position to the new position
         this.position = targetPosition.col + targetPosition.row;
         this.render();
@@ -33,3 +38,4 @@ Bishop.prototype.moveTo = function(targetPosition) {
         // Invalid move, do nothing
     }
 }
+

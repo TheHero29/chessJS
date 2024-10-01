@@ -28,8 +28,14 @@ Knight.prototype.isValidPosition = function(targetPosition){
     return false;
 }
 
-Knight.prototype.moveTo = function(targetPosition){    
+Knight.prototype.moveTo = function(targetPosition, board){    
     if(this.isValidPosition(targetPosition)){
+        const targetPiece = board.getPieceAt(targetPosition);
+        if(targetPiece && targetPiece.color !== this.color){
+            targetPiece.kill(targetPiece, board);
+            // return;
+        } 
+
         this.position = targetPosition.col + targetPosition.row;
         this.render();
     }else{

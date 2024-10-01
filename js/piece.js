@@ -44,9 +44,27 @@ Piece.prototype.render = function(){
     }
 }
 
-Piece.prototype.kill = function(targetPiece){
-    console.log("Method not implemeted by: " + typeof(this));
+Piece.prototype.kill = function(targetPiece, board){
+    const pieces = targetPiece.color === 'white' ? board.whitePieces : board.blackPieces;
+    const pieceType = (targetPiece.type === 'king' || targetPiece.type === 'queen') ? targetPiece.type : targetPiece.type + 's';
+    if(targetPiece.type === 'king' || targetPiece.type === 'queen'){
+        delete pieces[targetPiece.type];
+    } else{
+        const index = pieces[pieceType].indexOf(targetPiece);
+        if (index !== -1) {
+            pieces[pieceType].splice(index, 1);
+        }
+    }
+    
+    this.removePiece(targetPiece);
 }
+
+Piece.prototype.removePiece = function(config) {
+    let $element = document.querySelector(`[data-col="${config.position[0]}"] [data-row="${config.position[1]}"]`);
+    if ($element) {
+        $element.innerHTML = ''; 
+    }
+};
 
 Piece.prototype.select = function() {
     console.log("Piece selected: " + this.type);
