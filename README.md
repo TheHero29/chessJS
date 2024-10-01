@@ -41,7 +41,7 @@ This is a simple chess game created using **HTML**, **CSS**, and **JavaScript**.
 ## Contributors
 
 - Loukik Thatte
-- Ruthwick Chikkoti
+- Ruthwik Chikoti
 - Saksham Jain
-- Samrudh V. Jain
+- Samrudh Jain
 - Shruti Verma
